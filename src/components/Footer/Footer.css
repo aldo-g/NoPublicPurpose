@@ -1,0 +1,189 @@
+:root {
+  --header-bg: rgba(0, 0, 0, 0.85);
+  --header-text-color: #e4e4e4;
+  --footer-bg: rgba(0, 0, 0, 0.85); /* Semi-transparent background */
+  --footer-text-color: #e4e4e4;
+  --shadow-color: rgba(255, 255, 255, 0.6); /* Shadow color */
+  --font-family: 'Courier New', Courier, monospace;
+  --transition-duration: 0.3s;
+}
+
+/* Footer Container Styling */
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  
+  /* Added Box Shadow to Footer Container */
+  box-shadow: 
+    0 5px 5px var(--shadow-color),    /* Bottom shadow */
+    5px 0 5px var(--shadow-color),    /* Right shadow */
+    -5px 0 5px var(--shadow-color);   /* Left shadow */
+  
+  /* Optional: Assign a high z-index to match the header's z-index */
+  z-index: 9998; /* Ensure it's below the header's z-index if necessary */
+}
+
+/* Footer Styling */
+.footer {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: var(--footer-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) ease;
+
+}
+
+/* Footer Text */
+.footer__text {
+  color: var(--footer-text-color);
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Nub Element */
+/* Nub Element */
+.footer__nub {
+  position: absolute;
+  bottom: 60px; /* Positioned just above the footer */
+  left: 90%; /* Positioned on the right side */
+  transform: translateX(-50%);
+  width: 100px;
+  height: 60px;
+  background: var(--footer-bg);
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height var(--transition-duration) ease;
+  overflow: hidden; /* Ensures content doesn't spill when height shrinks */
+  z-index: 3; /* Increased z-index to be above the footer-container's shadow */
+
+  /* Adjusted Box Shadow: Top, Left, Right */
+  box-shadow: 
+  0 -5px 3px -2px var(--shadow-color),    /* Top shadow: reduced blur and negative spread */
+  5px -5px 3px var(--shadow-color),         /* Right shadow */
+  -5px -5px 3px var(--shadow-color);        /* Left shadow */
+}
+
+
+/* Hover Effect: Slightly increase nub's height */
+.footer:not(.footer--disabled):hover .footer__nub {
+  height: 65px;
+}
+
+/* Disabled State: Shrink nub's height to 0 */
+.footer--disabled .footer__nub {
+  height: 0;
+}
+
+/* Container for the arrow and "The Past" text */
+.footer__past-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity var(--transition-duration) ease, transform var(--transition-duration) ease;
+}
+
+/* Hide the past-container when disabled */
+.footer--disabled .footer__past-container {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+}
+
+/* "The Past" text element */
+.footer__past-label {
+  color: var(--footer-text-color);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  text-align: center;
+  margin-top: 8px;
+  transition: color var(--transition-duration) ease;
+}
+
+/* Arrow above "The Past" text */
+.footer__arrow {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 16px solid var(--footer-text-color);
+  transform: rotate(180deg);
+  transition: 
+    border-bottom-color var(--transition-duration) ease,
+    transform var(--transition-duration) ease;
+}
+
+/* Change arrow color on hover when not disabled */
+.footer:not(.footer--disabled):hover .footer__arrow {
+  border-bottom-color: #ffffff;
+}
+
+/* Disabled state styles for arrow and label */
+.footer--disabled .footer__arrow {
+  border-bottom-color: #cccccc; /* Lighter color to indicate disabled */
+}
+
+.footer--disabled .footer__past-label {
+  color: #cccccc; /* Lighter text color */
+}
+
+/* Tooltip Styling */
+.footer__tooltip {
+  position: absolute;
+  bottom: 80px; /* Positioned above the nub */
+  left: 90%; /* Same as nub */
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--transition-duration) ease, visibility var(--transition-duration) ease;
+  pointer-events: none;
+}
+
+.footer--disabled .footer__tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .footer__nub {
+    width: 80px;
+    height: 50px;
+    left: 90%; /* Maintain right positioning */
+  }
+
+  .footer__past-container {
+    bottom: 55px;
+  }
+
+  .footer__arrow {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 14px solid var(--footer-text-color);
+  }
+
+  .footer__past-label {
+    font-size: 1rem;
+  }
+
+  .footer__tooltip {
+    bottom: 70px; /* Adjusted for smaller nub */
+    left: 90%; /* Same as nub */
+  }
+}

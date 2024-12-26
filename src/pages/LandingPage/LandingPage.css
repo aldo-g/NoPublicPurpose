@@ -1,0 +1,147 @@
+:root {
+  --header-bg: rgba(0, 0, 0, 0.85); /* Background color for the header */
+  --header-text-color: #e4e4e4; /* Text color for the header */
+  --footer-shadow-color: rgba(255, 0, 150, 0.6); /* Shadow color for the footer */
+  --font-family: 'Courier New', Courier, monospace; /* Default font family */
+
+  /* Transition durations */
+  --transition-duration: 0.3s; /* General transition duration */
+  --background-animation-duration: 1s; /* Specific duration for background animations */
+}
+
+/* Explanation:
+   - These variables allow for consistent styling and easy updates.
+   - Transition durations ensure synchronization between JavaScript setTimeouts and CSS animations.
+*/
+
+/* LandingPage.css */
+
+/* General Page Styling */
+.landing-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  overflow: hidden; /* Prevents scrollbars during animations */
+  background: black; /* Fallback background color */
+}
+
+/* Background Layers */
+.background-layer {
+  position: absolute; /* Positioned relative to the nearest positioned ancestor */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover; /* Ensures the background image covers the entire layer */
+  background-repeat: no-repeat; /* Prevents background image from repeating */
+  background-position: center; /* Centers the background image */
+  z-index: 0; /* Stacks background layers below other elements */
+}
+
+/* The currently active background with no animation */
+.background-layer.active {
+  transform: translateY(0);
+}
+
+/* Forward Navigation (Footer Click) Animations */
+.slide-in-bottom {
+  animation: slideInFromBottom var(--background-animation-duration) ease forwards;
+}
+
+.slide-out-bottom {
+  animation: slideOutToTop var(--background-animation-duration) ease forwards;
+}
+
+/* Backward Navigation (Header Click) Animations */
+.slide-in-top {
+  animation: slideInFromTop var(--background-animation-duration) ease forwards;
+}
+
+.slide-out-top {
+  animation: slideOutToBottom var(--background-animation-duration) ease forwards;
+}
+
+/* Keyframes for Background Animations */
+
+/* Slide In from Bottom */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%); /* Starts below the viewport */
+  }
+  to {
+    transform: translateY(0); /* Ends at original position */
+  }
+}
+
+/* Slide Out to Top */
+@keyframes slideOutToTop {
+  from {
+    transform: translateY(0); /* Starts at original position */
+  }
+  to {
+    transform: translateY(-100%); /* Moves above the viewport */
+  }
+}
+
+/* Slide In from Top */
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%); /* Starts above the viewport */
+  }
+  to {
+    transform: translateY(0); /* Ends at original position */
+  }
+}
+
+/* Slide Out to Bottom */
+@keyframes slideOutToBottom {
+  from {
+    transform: translateY(0); /* Starts at original position */
+  }
+  to {
+    transform: translateY(100%); /* Moves below the viewport */
+  }
+}
+
+/* Header and Other Elements Stacking */
+
+/* Ensures the header stays above all background layers */
+.header {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensures the lineup box and arrow section stay above background layers but below the header */
+.lineup-box,
+.arrow-section {
+  position: relative;
+  z-index: 5;
+}
+
+/* Duplicate classes to set animation durations consistently */
+.slide-in-bottom {
+  animation: slideInFromBottom var(--background-animation-duration) ease forwards;
+}
+
+.slide-out-bottom {
+  animation: slideOutToTop var(--background-animation-duration) ease forwards;
+}
+
+.slide-in-top {
+  animation: slideInFromTop var(--background-animation-duration) ease forwards;
+}
+
+.slide-out-top {
+  animation: slideOutToBottom var(--background-animation-duration) ease forwards;
+}
+
+/* Explanation:
+   - Background layers are managed with absolute positioning to allow smooth transitions.
+   - Slide-in and slide-out classes apply keyframe animations for transitioning between backgrounds.
+   - Z-index ensures proper stacking order of elements.
+   - Transition durations are controlled via CSS variables for synchronization with JavaScript timeouts.
+*/

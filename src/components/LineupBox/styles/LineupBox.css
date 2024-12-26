@@ -1,0 +1,198 @@
+/* LineupBox.css */
+
+/* Container for the lineup box */
+.lineup-box {
+  width: 400px;
+  height: 500px;
+  perspective: 1000px; /* Enables 3D transformations */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Flip Container - holds both FrontSide and BackSide */
+.flip-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d; /* Ensures child elements are positioned in 3D space */
+  transition: transform 0.8s; /* Duration of the flip animation */
+}
+
+/* Flipped state - rotates the container to show the back side */
+.flip-container.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Disable transitions temporarily to prevent flickering */
+.no-transition {
+  transition: none !important;
+}
+
+/* Common styles for Front and Back sides */
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the back side when not visible */
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(30,30,30,0.9); /* Semi-transparent dark background */
+  color: #e4e4e4; /* Light gray text color */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3),
+              0 0 30px rgba(255,0,150,0.3); /* Glowing shadows for depth */
+}
+
+/* Specific styles for the back side */
+.back {
+  background: rgba(30,30,30,0.9);
+  color: #ffffff; /* White text color for better contrast */
+  transform: rotateY(180deg); /* Rotates the back side to align with the flipped container */
+}
+
+/* Flip button container positioned at the top-right corner */
+.flip-trigger {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Flip button styles */
+.flip-button {
+  background: rgba(255,255,255,0.2); /* Semi-transparent background */
+  border: none;
+  border-radius: 50%; /* Circular shape */
+  width: 30px;
+  height: 30px;
+  color: #ffffff; /* White icon color */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s; /* Smooth background transition on hover */
+}
+
+/* Flip button hover effect */
+.flip-button:hover {
+  background: rgba(255,255,255,0.4); /* Slightly more opaque on hover */
+}
+
+/* Paragraph styles within Front and Back sides */
+.front p,
+.back p {
+  white-space: normal;
+  overflow: visible;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+/* Smaller font size for paragraphs on the back side */
+.back p {
+  font-size: small;
+}
+
+/* Heading styles for the back side */
+.back h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+/* Link styles within Front and Back sides */
+.lineup-link,
+.location-link,
+.ticket-link {
+  color: #e4e4e4; /* Light gray link color */
+  text-decoration: none; /* Removes underline from links */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: inherit; /* Inherits font size from parent */
+}
+
+/* Bold font weight for ticket links */
+.ticket-link {
+  font-weight: bold;
+}
+
+/* Hover effects for links */
+.lineup-link:hover,
+.location-link:hover,
+.ticket-link:hover {
+  text-decoration: underline; /* Underlines link text on hover */
+  color: #ffffff; /* Changes link color to white on hover */
+}
+
+/* Specific link styles for the back side */
+.back a {
+  color: #ffffff; /* White link color */
+  text-decoration: none;
+}
+
+/* Hover effects for links on the back side */
+.back a:hover {
+  text-decoration: underline;
+  color: #ff0096; /* Pink color on hover */
+}
+
+/* Animation Classes */
+
+/* Classes for drop-out and drop-in animations on the front side */
+.drop-out-front {
+  display: inline-block;
+  animation: dropOut 0.5s ease forwards; /* Initiates drop-out animation */
+}
+
+.drop-in-front {
+  display: inline-block;
+  animation: dropIn 0.5s ease forwards; /* Initiates drop-in animation */
+}
+
+/* Classes for drop-out and drop-in animations on the back side */
+.drop-out-back {
+  display: inline-block;
+  animation: dropOut 0.5s ease forwards; /* Initiates drop-out animation */
+}
+
+.drop-in-back {
+  display: inline-block;
+  animation: dropIn 0.5s ease forwards; /* Initiates drop-in animation */
+}
+
+/* Keyframe for drop-out animation */
+@keyframes dropOut {
+  0% {
+    transform: translateY(0); /* Starts at original position */
+    opacity: 1; /* Fully opaque */
+  }
+  100% {
+    transform: translateY(20px); /* Moves down by 20px */
+    opacity: 0; /* Fully transparent */
+  }
+}
+
+/* Keyframe for drop-in animation */
+@keyframes dropIn {
+  0% {
+    transform: translateY(-20px); /* Starts 20px above */
+    opacity: 0; /* Fully transparent */
+  }
+  100% {
+    transform: translateY(0); /* Ends at original position */
+    opacity: 1; /* Fully opaque */
+  }
+}
+
+/* Ensures smooth transitions for all animation classes */
+.drop-out-front,
+.drop-in-front,
+.drop-out-back,
+.drop-in-back {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
