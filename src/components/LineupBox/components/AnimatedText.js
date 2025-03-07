@@ -1,40 +1,40 @@
-// components/AnimatedText.js
+/**
+ * AnimatedText.js
+ * 
+ * This file defines the AnimatedText component which splits input text into individual characters
+ * and applies staggered drop-in or drop-out animations for a dynamic visual effect.
+ */
+
 import React from 'react';
 import { generateRandomDelays } from '../utils/generateRandomDelays';
 
 /**
- * AnimatedText Component
- * 
- * This component splits the input text into individual characters and applies
- * staggered animations to each character for a dynamic visual effect.
- * 
- * Props:
- * - text: String of text to display with animations.
- * - side: String indicating which side ("front" or "back") the text is on.
- * - isAnimating: Boolean indicating if a page transition is currently animating.
+ * AnimatedText Component displays text with staggered drop-in or drop-out animations.
+ *
+ * @param {Object} props - The component properties.
+ * @param {string} props.text - The text to display with animations.
+ * @param {string} [props.side='front'] - The side indicator ("front" or "back").
+ * @param {boolean} props.isChangingContent - Indicates if a content transition animation is in progress.
+ * @returns {JSX.Element} The rendered animated text.
  */
-export const AnimatedText = ({ text, side = 'front', isAnimating }) => {
-  // Determine the appropriate CSS class based on the side and animation state
+export const AnimatedText = ({ text, side = 'front', isChangingContent }) => {
   const animationClass = side === "front"
-    ? (isAnimating ? "drop-out-front" : "drop-in-front")
-    : (isAnimating ? "drop-out-back" : "drop-in-back");
+    ? (isChangingContent ? "drop-out-front" : "drop-in-front")
+    : (isChangingContent ? "drop-out-back" : "drop-in-back");
 
-  // Generate random delays for each character to create a staggered animation effect
   const delays = generateRandomDelays(text.length, 20, 200);
 
-  // Log the rendering of AnimatedText with current props
-  console.log(`[${performance.now()}] AnimatedText Render: text="${text}", side="${side}", isAnimating=${isAnimating}, animationClass=${animationClass}`);
+  console.log(`[${performance.now()}] AnimatedText Render: text="${text}", side="${side}", isChangingContent=${isChangingContent}, animationClass=${animationClass}`);
 
   return (
     <>
-      {/* Split the text into individual characters and apply animations */}
       {text.split("").map((char, index) => (
         <span
           key={index}
           className={animationClass}
-          style={{ animationDelay: `${delays[index]}ms` }} // Staggered animation delay
+          style={{ animationDelay: `${delays[index]}ms` }}
         >
-          {char === " " ? "\u00A0" : char} {/* Replace space with non-breaking space for consistent rendering */}
+          {char === " " ? "\u00A0" : char}
         </span>
       ))}
     </>

@@ -1,55 +1,42 @@
-// components/BackSide.js
+/**
+ * BackSide.js
+ * 
+ * This file defines the BackSide component which displays the info view of the lineup box.
+ * It uses drop-out and drop-in animations (with increased speed) when content changes.
+ */
+
 import React from "react";
 import { AnimatedText } from "./AnimatedText";
 
 /**
- * BackSide Component
- * 
- * Displays the back side of the lineup box with animated text for event details.
- * 
- * Props:
- * - displayedContent: Object containing the content to display.
- * - isChangingContent: Boolean indicating if content is changing (for animations).
- * - isAnimating: Boolean indicating if a page transition is currently animating.
- * - handleFlip: Function to toggle the flipped state of the lineup box.
+ * BackSide Component displays the info (back) information of the lineup box.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Object} props.displayedContent - The content to display on the back side.
+ * @param {boolean} props.isChangingContent - Indicates if the back text is currently animating.
+ * @param {Function} props.handleToggle - Function to revert to the front view.
+ * @returns {JSX.Element} The rendered back side.
  */
-const BackSide = ({ displayedContent, isChangingContent, isAnimating, handleFlip }) => {
-  // Log when BackSide renders and what content it displays
-  console.log(`[${performance.now()}] BackSide Render: displayedContent=`, displayedContent);
-
+const BackSide = ({ displayedContent, isChangingContent, handleToggle }) => {
   return (
     <div className="back">
-      {/* Flip Button */}
       <div className="flip-trigger">
         <button
           className="flip-button"
           onClick={(e) => {
-            e.stopPropagation(); // Prevent event bubbling
-            console.log(`[${performance.now()}] BackSide Flip Button Clicked`);
-            handleFlip(); // Trigger flip action
+            e.stopPropagation();
+            handleToggle();
           }}
-          aria-label="Close Event Details" // Accessibility label
+          aria-label="Close Event Details"
         >
-          &#x21bb; {/* Unicode character for clockwise open circle arrow */}
+          &#x21bb;
         </button>
       </div>
-
-      {/* Animated "About the Event" Heading */}
       <h3>
-        <AnimatedText 
-          text="About the Event"
-          side="back"
-          isChangingContent={isChangingContent}
-        />
+        <AnimatedText text="About the Event" side="back" isChangingContent={isChangingContent} />
       </h3>
-
-      {/* Event Details with Animated Text */}
       <p>
-        <AnimatedText
-          text={displayedContent.details || "No additional details available."}
-          side="back"
-          isChangingContent={isChangingContent}
-        />
+        <AnimatedText text={displayedContent.details || "No additional details available."} side="back" isChangingContent={isChangingContent} />
       </p>
     </div>
   );
